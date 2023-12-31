@@ -12,7 +12,7 @@ The Flink streaming job reads data from the OpenWeatherMap API and applies a sli
 
 ## Visualization
 
-Within each sliding window, the extracted weather data for selected variables (temperature, humidity, pressure, wind speed, and clouds) is plotted and visualized. This dynamic visualization helps showcase changes in weather conditions across different cities and the 5 minutes slide interval choice was made in order to ensure we have variability in the weather data for  meaningful plots.
+Within each sliding window, the extracted weather data for selected variables (temperature, humidity, pressure, wind speed, and clouds) is plotted and visualized. This dynamic visualization helps showcase changes in weather conditions across different cities and the 5 minutes slide interval choice was made in order to ensure we have variability in the weather data for  meaningful plots.The sliding window choice helps showcase changes in weather conditions across different cities for a 15-minute period at a time.
 
 ## Key Features
 
