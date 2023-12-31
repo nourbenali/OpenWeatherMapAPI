@@ -40,7 +40,11 @@ To use this project, follow these steps:
 
 We opted for two types of plots and we used matplotlib for data visualization.
 
-The first plot is a line-chart comparing the different weather variables for the different cities as shown below for the temperature variable:
+The first plot type is a line-chart comparing the different weather variables for the different cities as shown below for the temperature variable as an example:
+
 ![Alt Text](./plots/Real-Time-Temperature-in-Different-Cities.png)
 
+The second plot type is a combination of different linecharts illustrating the forecast for a particular city as shown below for London as an example: 
+
+![Alt Text](./plots/London-weather-forecast.png)
 
