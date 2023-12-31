@@ -40,5 +40,7 @@ To use this project, follow these steps:
 
 We opted for two types of plots and we used matplotlib for data visualization.
 
-the first plot is a line-chart comparing the different weather variables for the different cities as shown below for the temperature across the different:
+The first plot is a line-chart comparing the different weather variables for the different cities as shown below for the temperature variable:
+![Alt Text](./plots/Real-Time-Temperature-in-Different-Cities.png)
+
 
