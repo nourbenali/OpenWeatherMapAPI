@@ -26,13 +26,13 @@ Within each sliding window, the extracted weather data for selected variables (t
 - **jdk 11 or higher**
 - **Flink 1.13 or higher**
 - **scala 2.12 or higher**
-- 
+
 ## Usage
 
 To use this project, follow these steps:
 
 1. **Install the required dependencies above**
-2. **Clone the repository into an IDE ( ex: IntelliJ )**
+2. **Clone the repository into your preferred IDE**
 3. **Run the openweathermap.scala script**
 4. **Run the weather_data.ipynb script simultaneously to obtain the visualization plots in real-time**
 
@@ -47,4 +47,22 @@ The first plot type is a line-chart comparing the different weather variables fo
 The second plot type is a combination of different linecharts illustrating the forecast for a particular city as shown below for London as an example: 
 
 ![Alt Text](./plots/London-weather-forecast.png)
+
+## Meet the Team
+
+This Project is brought to you by our enthusiastic duo:
+
+- [**Nour ElHouda Ben Ali**](https://www.linkedin.com/in/nour-elhouda-ben-ali-b01982195/)
+
+- [**Eya Sahli**](https://www.linkedin.com/in/eya-sahli-5ab205174/)
+
+
+## Contact
+
+For inquiries or support, feel free to reach out to us:
+
+- Nour ElHouda Ben Ali : [nour-el-houda.ben-ali@dauphine.eu](mailto:nour-el-houda.ben-ali@dauphine.eu)
+
+- Eya Sahli: [eya.sahli@dauphine.eu](mailto:eya.sahli@dauphine.eu)
+
 
