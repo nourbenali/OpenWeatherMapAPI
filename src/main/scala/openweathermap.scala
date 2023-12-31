@@ -3,7 +3,8 @@ import org.apache.flink.streaming.api.functions.sink.SinkFunction
 import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.json4s._
 import org.json4s.native.JsonMethods._
-
+import org.apache.flink.streaming.api.windowing.time._
+import org.apache.flink.streaming.api.windowing.assigners.SlidingProcessingTimeWindows
 import java.io.FileWriter
 import java.net.{HttpURLConnection, URL, URLEncoder}
 import scala.util.{Failure, Success, Try}
@@ -11,14 +12,11 @@ import scala.util.{Failure, Success, Try}
 // SourceFunction to fetch weather data for multiple cities
 class OpenWeatherMapSource extends SourceFunction[(String, Double, Double, Double, Double, Double)] {
 
-  // List of cities for which weather data is fetched
   private val cities = List("London", "New York", "Paris", "Sydney", "Tokyo", "Dubai", "Moscow")
   private val apiKey = "9ad42e4331030fd4c17744170c84d008"
   private val units = "metric"
-
   @volatile private var running = true
 
-  // Method to run the source function
   override def run(ctx: SourceFunction.SourceContext[(String, Double, Double, Double, Double, Double)]): Unit = {
     while (running) {
       cities.foreach { city =>
@@ -27,12 +25,10 @@ class OpenWeatherMapSource extends SourceFunction[(String, Double, Double, Doubl
           case Failure(ex) => ex.printStackTrace()
         }
       }
-      // Fetch data every 5 minutes (300000 milliseconds)
       Thread.sleep(300000)
     }
   }
 
-  // Method to fetch weather data for a given city
   private def fetchWeatherData(city: String): Try[(String, Double, Double, Double, Double, Double)] = {
     Try {
       implicit val formats: DefaultFormats.type = DefaultFormats
@@ -58,7 +54,6 @@ class OpenWeatherMapSource extends SourceFunction[(String, Double, Double, Doubl
     }
   }
 
-  // Method to cancel the source function
   override def cancel(): Unit = {
     running = false
   }
@@ -82,12 +77,18 @@ object WeatherData {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     val weatherDataStream = env.addSource(new OpenWeatherMapSource)
 
+    // Add sliding window to the data stream
+    val windowedStream = weatherDataStream
+      .keyBy(_._1) // Key by city name for windowing
+      .window(SlidingProcessingTimeWindows.of(Time.minutes(15), Time.minutes(5))) // Sliding window of 15 minutes with a slide of 5 minutes
+      .reduce((a, b) => (a._1, (a._2 + b._2) / 2, (a._3 + b._3) / 2, (a._4 + b._4) / 2, (a._5 + b._5) / 2, (a._6 + b._6) / 2)) // Average values
+
     // Define the path where you want to save the CSV file
     val outputPath = "output//weather_data.csv"
 
-    // Replace print() with custom sink
-    weatherDataStream.addSink(new CsvSinkFunction(outputPath))
+    // Add the windowed stream to the sink
+    windowedStream.addSink(new CsvSinkFunction(outputPath))
 
-    env.execute("Weather Data Streaming")
+    env.execute("Weather Data Streaming with Sliding Window")
   }
 }
